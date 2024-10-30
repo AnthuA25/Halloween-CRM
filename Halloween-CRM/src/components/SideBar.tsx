@@ -14,7 +14,7 @@ import {
 
 const Sidebar: React.FC = () => {
   return (
-    <Drawer variant="permanent" sx={{ width: 240, flexShrink: 0 }}>
+    <Drawer variant="permanent" sx={{ width: 240, flexShrink: 0}}>
       <Toolbar
         sx={{
           backgroundColor: "#49545D",
@@ -31,17 +31,18 @@ const Sidebar: React.FC = () => {
         <ListItemButton
           component="a"
           href="/panel"
-          sx={{ "&:hover": { backgroundColor: "#467E91" } }}
+          sx={{ "&:hover": { backgroundColor: "#467E91" },marginBottom: "10px"}}
         >
           <ListItemIcon sx={{ color: "white" }}>
             <HomeIcon />
           </ListItemIcon>
           <ListItemText primary="Panel" />
         </ListItemButton>
+
         <ListItemButton
           component="a"
           href="/colaboradores"
-          sx={{ "&:hover": { backgroundColor: "#467E91" } }}
+          sx={{ "&:hover": { backgroundColor: "#467E91" } ,marginBottom: "10px"}}
         >
           <ListItemIcon sx={{ color: "white" }}>
             <PeopleAltIcon />
@@ -51,7 +52,7 @@ const Sidebar: React.FC = () => {
         <ListItemButton
           component="a"
           href="/participantes"
-          sx={{ "&:hover": { backgroundColor: "#467E91" } }}
+          sx={{ "&:hover": { backgroundColor: "#467E91" },marginBottom: "10px" }}
         >
           <ListItemIcon sx={{ color: "white" }}>
             <ConfirmationNumberIcon />
@@ -61,7 +62,7 @@ const Sidebar: React.FC = () => {
         <ListItemButton
           component="a"
           href="/oportunidades"
-          sx={{ "&:hover": { backgroundColor: "#467E91" } }}
+          sx={{ "&:hover": { backgroundColor: "#467E91" } ,marginBottom: "10px"}}
         >
           <ListItemIcon sx={{ color: "white" }}>
             <AssignmentIcon />
@@ -71,7 +72,7 @@ const Sidebar: React.FC = () => {
         <ListItemButton
           component="a"
           href="/tareas"
-          sx={{ "&:hover": { backgroundColor: "#467E91" } }}
+          sx={{ "&:hover": { backgroundColor: "#467E91" } ,marginBottom: "10px"}}
         >
           <ListItemIcon sx={{ color: "white" }}>
             <TaskIcon />
