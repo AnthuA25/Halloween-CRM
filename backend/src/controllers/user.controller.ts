@@ -38,7 +38,7 @@ export const registerUser = async (req: Request, res: Response): Promise<any> =>
 export const createUser = async (req: Request, resp: Response): Promise<any> => {
     try {
         const regexEmail = /[\w._%+-]+@[\w.-]+\.[a-zA-Z]{2,4}/;
-        const { name, email, password, phone, company, role } = req.body;
+        const { name, email, password, phone, company } = req.body;
         if(!name ||!email ||!password ||!phone){
             return resp.status(400).json({ message: "Nombre, correo electrónico, teléfono, contraseña y compañía son campos obligatorios" });
         };
