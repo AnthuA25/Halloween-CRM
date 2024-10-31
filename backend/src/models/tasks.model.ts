@@ -2,18 +2,15 @@ import mongoose, { Schema } from "mongoose";
 import { Itasks } from "../interface/index.interface";
 
 const tasksSchema = new Schema<Itasks>({
-  user_id: { type: Schema.Types.ObjectId, required: true,ref: 'Users'},
-  opportunity_id: { type: Schema.Types.ObjectId, required: true},
+  opportunity: { type: Schema.Types.ObjectId, required: true,ref: "Opportunity"},
   title: { type: String, required: true },
   description: { type: String, required: true },
-  status: { type: String, enum: ['new', 'in_progress', 'closed'], default: 'new' },
-  due_date: { type: Date, required: true },
-  assigned_to:[{type:Schema.Types.ObjectId,ref:'Users'}],
-  assigned_date: { type: Date, default: Date.now },
-  createdBy: { type: String, required: true },
-  modifiedBy: { type: String },
+  status: { type: String, enum: ["pending", "in_progress", "completed"], default: 'pending' },
+  start_date: { type: Date, default: Date.now },
+  end_date: { type: Date, required: true },
+  assigned_to:[{type:Schema.Types.ObjectId,ref:'User',default:[]}],
 }, { timestamps: true });
 
-const Tasks = mongoose.model<Itasks>('Tasks', tasksSchema);
+const Tasks = mongoose.model<Itasks>('Task', tasksSchema);
 
 export { Tasks };

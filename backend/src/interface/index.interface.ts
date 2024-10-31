@@ -1,17 +1,15 @@
 import mongoose from "mongoose";
+// import { Opportunity } from '../../../Halloween-CRM/src/components/OpportunityTable';
 
 export interface IParticipant {
   email:string;
   name:string;
-  createdAt: Date; //creado en (momento-fecha)
-  createdBy:string; // creado por (persona)
-  modifiedAt?:Date; // modificado en (momento-fecha)
-  modifiedBy?:string; // modificado por (persona)
+  event:mongoose.Types.ObjectId;
+  quantity:Number
 }
 
 export interface IUser {
   // id?: number;
-  _id?: mongoose.Types.ObjectId;
   name: string;
   email: string;
   phone: string;
@@ -23,35 +21,44 @@ export interface IUser {
   modifiedAt?:Date;
   modifiedBy?:string;
 }
-
-export interface IOpportunities {
+export interface IEvent{
   name: string;
-  description: string;
   type: string;
-  user_id: mongoose.Types.ObjectId;
-  status: 'new' | 'in_progress' | 'closed';
+  status: 'open' | 'closed';
   start_date: Date;
   end_date: Date;
-  createBy: string;
-  modifiedBy: string;
+  responsible:mongoose.Types.ObjectId;
+  participants:mongoose.Types.ObjectId[];
+  opportunity:mongoose.Types.ObjectId[];
+}
+
+export interface IOpportunities {
+  event: mongoose.Types.ObjectId;
+  name: string;
+  description: string;
+  status: 'pending' | 'in_progress' | 'completed';
+  start_date: Date;
+  end_date: Date;
+  responsible:mongoose.Types.ObjectId;
+  tasks:mongoose.Types.ObjectId[];
 } 
 
-export interface ITickets {
-  participant_id: mongoose.Types.ObjectId,
-  opportunity_id: mongoose.Types.ObjectId,
-  quantity: Number
-}
+// export interface ITickets {
+//   participant_id: IParticipant,
+//   opportunity_id: IOpportunities ,
+//   quantity: Number
+// }
 
 export interface Itasks{
   user_id: mongoose.Types.ObjectId,
-  opportunity_id: mongoose.Types.ObjectId,
+  opportunity: mongoose.Types.ObjectId,
   id: mongoose.Types.ObjectId,
   title: string;
   description: string;
   status: string;
+  start_date: Date;
+  end_date: Date;
   assigned_to:mongoose.Types.ObjectId[];
-  due_date: Date;
-  assigned_date: Date;
   createdBy?:string;
   modifiedAt?:Date;
   modifiedBy?:string;

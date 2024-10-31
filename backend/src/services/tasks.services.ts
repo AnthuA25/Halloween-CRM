@@ -8,8 +8,7 @@ const createATask = async (taskData: Itasks) => {
 
 const getTasks = async () => {
     return await Tasks.find()
-        .populate('user_id')
-        .populate('opportunity_id')
+        .populate('opportunity')
         .populate('assigned_to');
     ;
 };

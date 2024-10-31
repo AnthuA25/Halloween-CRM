@@ -1,55 +1,31 @@
-import { Opportunities } from "../models/opportunities.model";
 import { IOpportunities } from "../interface/index.interface";
-import { ObjectId } from "mongoose";
+import { Opportunities } from "../models/opportunities.model";
 
-const createAnOpportunity = async (name: string, description: string, type: string, user_id: ObjectId, start_date: Date, end_date: Date, createBy: string, modifiedBy: string) => {
-
-    const opportunity = new Opportunities({
-        name,
-        description,
-        type,
-        user_id,
-        start_date,
-        end_date,
-    })
-
-    await opportunity.save()
-
-    console.log('Successfully created opportunity', opportunity)
-
+const createAnOpportunity = async (opportunityData:IOpportunities):Promise<IOpportunities> => {
+    const opportunity = new Opportunities(opportunityData);
+    return await opportunity.save();
 }
 
-const updateAnOpportunity = async (id: string, name: string, description: string, type: string, start_date: Date, end_date: Date, modifiedBy: string) => {
-    const opportunity = await Opportunities.findByIdAndUpdate(id, {
-        name,
-        description,
-        type,
-        start_date,
-        end_date,
-        modifiedBy
-    }, { new: true })
-
-    console.log('Successfully updated opportunity', opportunity)
-
+const getOpportunities = async () : Promise<IOpportunities[]>=> {
+    return await Opportunities.find().populate({
+        path: 'event',
+        model: 'Event',
+    }).populate('tasks');
 }
 
 
-const getOpportunities = async () => {
-    return await Opportunities.find()
-
-    // console.log('All opportunities:', opportunities)
+const getAnOpportunity = async (id: string): Promise<IOpportunities | null>=> {
+    return await Opportunities.findById(id).populate('event responsible tasks');
 }
 
-const getAnOpportunity = async (id: string) => {
-    const opportunity = await Opportunities.findById(id)
 
-    console.log('An opportunity:', opportunity)
+const updateAnOpportunity = async (id: string,opportunityData: Partial<IOpportunities>):Promise<IOpportunities | null>=> {
+    return await Opportunities.findByIdAndUpdate(id, opportunityData, { new: true }).populate('event responsible tasks');
 }
 
-const deleteAnOpportunity = async (id: string) => {
-    await Opportunities.findByIdAndDelete(id)
 
-    console.log('Successfully deleted opportunity with id:', id)
+const deleteAnOpportunity = async (id: string): Promise<IOpportunities | null> => {
+    return await Opportunities.findByIdAndDelete(id)
 }
 
-export { createAnOpportunity, updateAnOpportunity, getOpportunities, getAnOpportunity, deleteAnOpportunity } 
+export { createAnOpportunity, getOpportunities,getAnOpportunity,updateAnOpportunity,deleteAnOpportunity} 

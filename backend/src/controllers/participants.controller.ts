@@ -9,9 +9,8 @@ import {
 } from '../services/participant.services';
 
 const createParticipant = async (req: Request, res: Response) => {
-    const { email, name, createdBy } = req.body;
     try {
-        const newParticipant = await createParticipantService(email, name, createdBy);
+        const newParticipant = await createParticipantService(req.body);
         res.status(201).json({
             message: "Participant created successfully",
             participant: newParticipant,
@@ -35,12 +34,12 @@ const getParticipants = async (req: Request, res: Response) => {
 };
 
 const getParticipantById = async (req: Request, res: Response) => {
-    const id = req.params.id as string;
+    const id = req.params.id;
     try {
         const participant = await getParticipantByIdService(id);
         if (!participant) {
             res.status(404).json({ message: "No se encontró el participante" });
-            return 
+            return;
         }
         res.status(200).json(participant);
     } catch (error) {
@@ -48,22 +47,15 @@ const getParticipantById = async (req: Request, res: Response) => {
     }
 };
 
-const updateParticipant = async (req: Request, res: Response) => {
-    const id = req.params.id as string;
-    const { email, name, createdBy, modifiedBy } = req.body;
-    
+const updateParticipant = async (req: Request, res: Response)=> {
+    const id = req.params.id;
     try {
-        const updatedParticipant = await updateParticipantService(id, {
-            email,
-            name,
-            createdBy,
-            modifiedBy,
-            modifiedAt: new Date()
-        });
+        const updatedParticipant = await updateParticipantService(id, req.body);
 
         if (!updatedParticipant) {
             res.status(404).json({ message: "Participante no encontrado" });
             return
+            
         }
 
         res.status(200).json({
@@ -87,7 +79,7 @@ const deleteParticipant = async (req: Request, res: Response) => {
 
         if (!deletedParticipant) {
             res.status(404).json({ message: "Participante no encontrado" });
-            return
+            return;
         }
 
         res.status(200).json({

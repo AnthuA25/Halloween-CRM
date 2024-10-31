@@ -10,6 +10,6 @@ const userSchema = new Schema<IUser, UserModel>({
   password: { type: String, required: true },
   company: { type: String, required: true },
   role: { type: String, enum: ['admin', 'collaborator'], default: 'collaborator' },
-},{timestamps:true});//SUSTITUYE A CREATEDAT Y UPDATEDAT PARA NO TENER QUE ESTARLOS ACTUALIZANDO
+},{timestamps:true});
 
-export const Users: UserModel = mongoose.model<IUser, UserModel>('Users', userSchema);//NOMBRE DEL ESQUEMA, Y EL ESQUEMA
+export const Users: UserModel = mongoose.model<IUser, UserModel>('User', userSchema);//NOMBRE DEL ESQUEMA, Y EL ESQUEMA

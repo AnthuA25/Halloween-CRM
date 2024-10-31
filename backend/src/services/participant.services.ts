@@ -1,24 +1,25 @@
 // src/services/participant.service.ts
+import { IParticipant } from "../interface/index.interface";
 import { Participant } from "../models/participant.model";
 
-const createParticipantService = async (email: string, name: string, createdBy: string) => {
-    const newParticipant = await Participant.create({ email, name, createdBy });
-    return newParticipant;
+const createParticipantService = async (participantData:IParticipant):Promise<IParticipant> => {
+    const newParticipant = new Participant(participantData);
+    return await newParticipant.save();
 };
 
-const getParticipantsService = async () => {
-    return await Participant.find();
+const getParticipantsService = async () :Promise<IParticipant[]> => {
+    return await Participant.find().populate('event');
 };
 
-const getParticipantByIdService = async (id: string) => {
-    return await Participant.findById(id);
+const getParticipantByIdService = async (id: string):Promise<IParticipant | null>  => {
+    return await Participant.findById(id).populate('event');
 };
 
-const updateParticipantService = async (id: string, updateData: any) => {
+const updateParticipantService = async (id: string, updateData: Partial<IParticipant>):Promise<IParticipant | null>  => {
     return await Participant.findByIdAndUpdate(id, updateData, { new: true });
 };
 
-const deleteParticipantService = async (id: string) => {
+const deleteParticipantService = async (id: string):Promise<IParticipant | null> => {
     return await Participant.findByIdAndDelete(id);
 };
 

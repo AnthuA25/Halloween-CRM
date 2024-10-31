@@ -39,8 +39,8 @@ export const createUser = async (req: Request, resp: Response): Promise<any> => 
     try {
         const regexEmail = /[\w._%+-]+@[\w.-]+\.[a-zA-Z]{2,4}/;
         const { name, email, password, phone, company, role } = req.body;
-        if(!name ||!email ||!password ||!phone){
-            return resp.status(400).json({ message: "Nombre, correo electrónico, teléfono, contraseña y compañía son campos obligatorios" });
+        if(!name ||!email ||!password ||!phone || !role){
+            return resp.status(400).json({ message: "Nombre, correo electrónico, teléfono, contraseña, rol y compañía son campos obligatorios" });
         };
         if (!regexEmail.test(email)) {
             return resp.status(400).json("Correo electrónico inválido");
@@ -112,29 +112,6 @@ export const getUserById = async (req: Request, resp: Response): Promise<any> =>
     }
 }
 
-// export const updateUser = async (req: Request, resp: Response): Promise<any> => {
-//     try {
-//         const {id} = req.params;
-//         const {name, password, phone, company, photo } = req.body;
-//         if(!id){
-//           return resp.status(400).json({ message: "ID es obligatorio" });
-//         }
-//         const findUser = await Users.findById(id);
-//         if (!findUser) {
-//             return resp.status(404).json({ message: "No se encontró el usuario" });
-//         }
-//         let psw = findUser.password;
-//         if(password){
-//           psw = await encryptedPassword(password);
-//         }
-//         const updateUser = await Users.updateOne({_id: id}, {name, password:psw, phone, company, photo})
-//         return resp.status(200).json({message: "Usuario actualizado", updateUser});
-//     } catch (error) {
-//         console.log("🚀 ~ updateUser ~ error:", error)
-//         return resp.status(500).json({ message: "Error del servidor", error});
-//     }
-// }
-
 export const updateUser = async (req: Request, resp: Response): Promise<any> => {
     try {
         const { id } = req.params;
@@ -176,19 +153,3 @@ export const deleteUser = async (req: Request, resp: Response): Promise<any> => 
         return resp.status(500).json({ message: "Error del servidor", error});
     }
 }
-
-// export const deleteUser = async (req: Request, resp: Response): Promise<any> => {
-//     try {
-//         const { id } = req.params;
-//         if (!id) {
-//             return resp.status(400).json({ message: "ID es obligatorio" });
-//         }
-//         const deleteUser = await Users.findOneAndDelete({ _id: id });
-//         if (!deleteUser) {
-//             return resp.status(404).json({ message: "No se encontró el usuario" });
-//         }
-//         return resp.status(200).json({ message: "Usuario eliminado", deleteUser });
-//     } catch (error) {
-//         return resp.status(500).json({ message: "Error del servidor", error });
-//     }
-// }
