@@ -50,7 +50,7 @@ export const createUser = async (req: Request, resp: Response): Promise<any> => 
             return resp.status(409).json({ message: "Correo electrónico ya registrado" });
         };
         const newPassword = await encryptedPassword(password);
-        const newUser = new Users({name: name, email:email, password: newPassword, phone: phone, company: company, role: role});
+        const newUser = new Users({name: name, email:email, password: newPassword, phone: phone, company: company});
         await newUser.save();
         resp.status(201).json({message:"Colaborador creado", newUser});
     } catch (error) {
